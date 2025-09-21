@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Birthday Surprise</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: lightpink;
+      overflow: hidden;
+      text-align: center;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+    }
+
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      color: red;
+      font-size: 20px;
+      animation: floatUp 5s linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-100vh); opacity: 0; }
+    }
+
+    .container {
+      margin-top: 100px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .hidden { display: none; }
+
+    .btn {
+      background: #ff4d6d;
+      color: white;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 25px;
+      font-size: 18px;
+      cursor: pointer;
+      margin-top: 20px;
+      box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+    }
+    .btn:hover { background: #e63e5d; }
+
+    .message {
+      font-size: 28px;
+      color: #b30059;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+    .final-msg {
+      font-size: 26px;
+      color: #ff0066;
+      margin-top: 30px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="hearts"></div>
+
+  <div class="container">
+    <img src="main.gif" alt="Main GIF" width="250"><br>
+    <button class="btn" onclick="firstClick()">Click to Open Surprise</button>
+
+    <div id="first-msg" class="message hidden">
+      THANKS FOR CLICKING ... PLEASE CLICK ONE MORE TIME💖 <br>
+      <button class="btn" onclick="secondClick()">Click Again</button>
+    </div>
+
+    <div id="final-surprise" class="hidden">
+      <div class="message">🎉 HAPPY BIRTHDAY AIMAN 🎉</div>
+      <img src="overlay.gif" alt="Overlay GIF" width="200"><br>
+      <div class="final-msg">
+        MAY YOU LIVE A HAPPY AND A LONG LIFE <br>
+        ........ AND MAY YOU GET SOMEONE LIKE SALAR 😅 (AMEEN)
+      </div>
+    </div>
+  </div>
+
+  <!-- Sounds -->
+  <audio id="pop-sound" src="https://www.soundjay.com/buttons/sounds/button-16.mp3" preload="auto"></audio>
+  <audio id="birthday-music" src="https://www.fesliyanstudios.com/play-mp3/387" preload="auto"></audio>
+
+  <script>
+    // Hearts
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.style.left = Math.random() * window.innerWidth + "px";
+      heart.innerHTML = "❤";
+      document.getElementById("hearts").appendChild(heart);
+      setTimeout(() => heart.remove(), 5000);
+    }
+    setInterval(createHeart, 500);
+
+    // First click
+    function firstClick() {
+      document.querySelector(".btn").style.display = "none";
+      document.getElementById("first-msg").classList.remove("hidden");
+      document.getElementById("pop-sound").play();  // 🔊 Play pop sound
+    }
+
+    // Second click
+    function secondClick() {
+      document.getElementById("first-msg").style.display = "none";
+      document.getElementById("final-surprise").classList.remove("hidden");
+
+      // Balloons
+      for (let i = 0; i < 20; i++) {
+        let balloon = document.createElement("div");
+        balloon.innerHTML = "🎈";
+        balloon.style.position = "absolute";
+        balloon.style.left = Math.random() * window.innerWidth + "px";
+        balloon.style.top = window.innerHeight + "px";
+        balloon.style.fontSize = "30px";
+        balloon.style.animation = `floatUp ${3 + Math.random()*2}s linear forwards`;
+        document.body.appendChild(balloon);
+        setTimeout(() => balloon.remove(), 5000);
+      }
+
+      // 🔊 Play happy birthday music
+      document.getElementById("birthday-music").play();
+    }
+  </script>
+
+</body>
+</html>
